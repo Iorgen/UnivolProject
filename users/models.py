@@ -26,17 +26,3 @@ class Volunteer(models.Model):
     rating = models.FloatField(default=0)
     description = models.TextField(max_length=5000)
     employment_situation = models.TextField(max_length=100)
-
-
-class Vacancy(models.Model):
-    vacancy_name = models.TextField(max_length=50)
-    date_range = models.TextField(max_length=21)
-    description = models.TextField(max_length=5000)
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
-    competitions_keywords = models.TextField(max_length=5000)
-    event_name = models.TextField(max_length=1000)
-
-
-
-
-
