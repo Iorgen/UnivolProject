@@ -22,11 +22,11 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('univol.urls'))
+    path('', include('univol.urls')),
+    path('api/v1/', include('api.urls')),
 ]
 
 urlpatterns += staticfiles_urlpatterns()
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
