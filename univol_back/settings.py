@@ -22,17 +22,18 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '407p3yt1pe4!v4k-ipoqu)kp(b)pcx8ohqo1#@z!qzzy7o=lz2'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# # SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = False
 
 ALLOWED_HOSTS = [
     'safe-bastion-88967.herokuapp.com'
 ]
-
+# DEBUG = True
+# ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'rest_api',
+    # 'rest_api',
     'rest_framework',
     'crispy_forms',
     'univol.apps.UnivolConfig',
@@ -184,3 +185,5 @@ SWAGGER_SETTINGS = {
 
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
+
+AUTH_USER_MODEL = 'users.CustomUser'
