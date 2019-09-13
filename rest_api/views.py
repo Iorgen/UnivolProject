@@ -16,13 +16,14 @@ from rest_framework.generics import GenericAPIView, RetrieveUpdateAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 
 from .app_settings import (
-    TokenSerializer, UserDetailsSerializer, LoginSerializer,
+    TokenSerializer, LoginSerializer,
     PasswordResetSerializer, PasswordResetConfirmSerializer,
     PasswordChangeSerializer, JWTSerializer, create_token
 )
 from .models import TokenModel
 from .utils import jwt_encode
-
+from users.models import Volunteer, Organizator
+from .serializers import VolunteerProfileSerializer, OrganizatorProfileSerializer
 sensitive_post_parameters_m = method_decorator(
     sensitive_post_parameters(
         'password', 'old_password', 'new_password1', 'new_password2'
@@ -154,11 +155,15 @@ class UserDetailsView(RetrieveUpdateAPIView):
 
     Returns UserModel fields.
     """
-    serializer_class = UserDetailsSerializer
+    serializer_class = VolunteerProfileSerializer
     permission_classes = (IsAuthenticated,)
 
     def get_object(self):
-        return self.request.user
+        profile = Volunteer.objects.filter(user=self.request.user)
+        if not profile:
+            self.serializer_class = OrganizatorProfileSerializer
+            profile = Organizator.objects.filter(user=self.request.user)
+        return profile[0]
 
     def get_queryset(self):
         """

@@ -13,7 +13,7 @@ class CustomUser(AbstractUser):
 
 
 class Volunteer(models.Model):
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key=True)
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key=True, related_name='usr')
     first_name = models.TextField(max_length=100, null=False)
     last_name = models.TextField(max_length=100, null=False)
     # contacts = models.ForeignKey(Contacts, on_delete=models.CASCADE)

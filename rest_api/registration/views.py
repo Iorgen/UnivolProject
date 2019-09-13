@@ -66,7 +66,7 @@ class RegisterView(CreateAPIView):
         user = self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
 
-        if serializer.data['user_type'] is True:
+        if serializer.data['user_type'] is False:
             user_profile = Volunteer.objects.create(user=user)
             user_profile.save()
         else:

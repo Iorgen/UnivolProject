@@ -37,7 +37,7 @@ def organizator_register(request):
         form = OrganizatorSignUpForm()
     return render(request, 'users/register.html', {'form': form})
 
-#
+
 # @login_required
 # def profile(request):
 #     if request.method == 'POST':
