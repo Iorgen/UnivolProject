@@ -8,42 +8,31 @@ from django.conf import settings
 
 
 class CustomUser(AbstractUser):
-    name = models.CharField(blank=True, max_length=255)
-
-    def __str__(self):
-        return self.email
+    is_volunteer = models.BooleanField(default=False)
+    is_organizator = models.BooleanField(default=False)
 
 
-# Create your models here.
-class Profile(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    image = models.ImageField(default='default.jpg', upload_to='profile_pics/')
-
-    def __str__(self):
-        return "%s Profile" % self.user.username
-
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-
-        img = Image.open(self.image.path)
-
-        if img.height > 300 or img.width > 300:
-            output_size = (300, 300)
-            img.thumbnail(output_size)
-            img.save(self.image.path)
+class Volunteer(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key=True)
+    first_name = models.TextField(max_length=100, null=False)
+    last_name = models.TextField(max_length=100, null=False)
+    # contacts = models.ForeignKey(Contacts, on_delete=models.CASCADE)
+    country = models.TextField(max_length=30, null=False)
+    city = models.TextField(max_length=30, null=False)
+    # photo = models.ImageField(verbose_name='User photo', name='User photo')
+    # rating = models.FloatField(default=0)
+    # description = models.TextField(max_length=5000)
+    # employment_situation = models.TextField(max_length=100)
 
 
-@receiver(post_save, sender=settings.AUTH_USER_MODEL)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        Profile.objects.create(user=instance)
-
-
-@receiver(post_save, sender=settings.AUTH_USER_MODEL)
-def save_user_profile(sender, instance, **kwargs):
-    instance.profile.save()
-
-
+class Organizator(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key=True)
+    name = models.TextField(max_length=100, null=False)
+    description = models.TextField(max_length=5000, null=False)
+    # organization_logo = models.ImageField(verbose_name='Logo', name='Logo')
+    # country = models.TextField(max_length=30)
+    # city = models.TextField(max_length=30)
+    # address = models.TextField(max_length=100)
 
 #
 # # ---------------------
@@ -90,4 +79,22 @@ def save_user_profile(sender, instance, **kwargs):
 #     competitions_keywords = models.TextField(max_length=5000)
 #     event_name = models.TextField(max_length=1000)
 #
+#
+# # Create your models here.
+# class Profile(models.Model):
+#     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+#     image = models.ImageField(default='default.jpg', upload_to='profile_pics/')
+#
+#     def __str__(self):
+#         return "%s Profile" % self.user.username
+#
+#     def save(self, *args, **kwargs):
+#         super().save(*args, **kwargs)
+#
+#         img = Image.open(self.image.path)
+#
+#         if img.height > 300 or img.width > 300:
+#             output_size = (300, 300)
+#             img.thumbnail(output_size)
+#             img.save(self.image.path)
 

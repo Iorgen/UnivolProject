@@ -13,8 +13,6 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.contrib.auth import views as auth_views
 from django.urls import path, include
 from users import views as user_views
 from django.conf import settings
@@ -23,20 +21,18 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.views.generic import TemplateView, RedirectView
-from rest_framework.schemas.coreapi import AutoSchema
-
 from rest_framework_swagger.views import get_swagger_view
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-
     path('admin/', admin.site.urls),
     path('', include('univol.urls')),
-    path('register/', user_views.register, name='register'),
-    path('profile/', user_views.profile, name='profile'),
-    # Login logout built in views
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('accounts/register/', user_views.register, name='register'),
+    path('accounts/register/volunteer', user_views.volunteer_register, name='volunteer_signup'),
+    path('accounts/register/organizator', user_views.organizator_register, name='organizator_signup'),
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
-
 
     url(r'^signup/$', TemplateView.as_view(template_name="signup.html"),
         name='signup'),
