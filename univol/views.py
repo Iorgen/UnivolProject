@@ -10,3 +10,10 @@ def index(request):
         "some_content": 'you you are here'
     }
     return render(request, 'univol/index.html', context)
+
+
+def home(request):
+    context = {
+        "some_content": 'you you are here'
+    }
+    return render(request, 'univol/index.html', context)
