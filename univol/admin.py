@@ -1,4 +1,4 @@
 from django.contrib import admin
-from univol.models import Contacts
+# from univol.models import Contacts
 # Register your models here.
-admin.site.register(Contacts)
+# admin.site.register(Contacts)
