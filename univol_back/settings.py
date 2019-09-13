@@ -33,7 +33,7 @@ ALLOWED_HOSTS = [
 
 # Application definition
 INSTALLED_APPS = [
-    # 'rest_api',
+    'rest_api',
     'rest_framework',
     'crispy_forms',
     'univol.apps.UnivolConfig',
