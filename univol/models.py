@@ -2,7 +2,7 @@ from datetime import datetime
 
 from django.db import models
 
-from users.models import CustomUser, Organizator
+from users.models import CustomUser, Organizator, Volunteer
 
 
 class Contribution(models.Model):
@@ -21,6 +21,6 @@ class Vacancy(models.Model):
 
 class Responds(models.Model):
     organization_id = models.IntegerField()
-    volunteer_id = models.IntegerField()
+    volunteer = models.ForeignKey(Volunteer, on_delete=models.CASCADE)
     respond_date = models.DateTimeField(default=datetime.now())
 

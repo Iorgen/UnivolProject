@@ -39,7 +39,6 @@ def chat_view(request, responder):
                 organization_id=request.user.id
             ).order_by('send_date')
         )
-        volunteers = Volunteer.objects.
         context = {
             'messages': responds,
         }
