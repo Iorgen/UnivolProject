@@ -1,7 +1,6 @@
 from django.http import HttpRequest
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth import get_user_model
-
 try:
     from allauth.account import app_settings as allauth_settings
     from allauth.utils import (email_address_exists,
@@ -172,6 +171,7 @@ class RegisterSerializer(serializers.Serializer):
     email = serializers.EmailField(required=allauth_settings.EMAIL_REQUIRED)
     password1 = serializers.CharField(write_only=True)
     password2 = serializers.CharField(write_only=True)
+    user_type = serializers.BooleanField()
 
     def validate_username(self, username):
         username = get_adapter().clean_username(username)
@@ -215,3 +215,10 @@ class RegisterSerializer(serializers.Serializer):
 
 class VerifyEmailSerializer(serializers.Serializer):
     key = serializers.CharField()
+
+#
+# if self.data['user_type'] is True:
+#     user_profile = Volunteer.objects.create(user=user)
+#     adapter.save_user(request, user, self)
+# else:
+#     user_profile = Volunteer.objects.create(user=user)

@@ -6,10 +6,10 @@ from django.db import transaction
 
 
 class VolunteerSignUpForm(UserCreationForm):
-    first_name = forms.CharField(max_length=100)
-    last_name = forms.CharField(max_length=100)
-    country = forms.CharField(max_length=100)
-    city = forms.CharField(max_length=100)
+    first_name = forms.CharField(max_length=100, initial='')
+    last_name = forms.CharField(max_length=100,  initial='')
+    country = forms.CharField(max_length=100,  initial='')
+    city = forms.CharField(max_length=100,  initial='')
 
     class Meta(UserCreationForm.Meta):
         model = CustomUser
@@ -39,7 +39,7 @@ class OrganizatorSignUpForm(UserCreationForm):
         user = super().save(commit=False)
         user.is_organizator = True
         user.save()
-        organizator = Volunteer.objects.create(user=user)
+        organizator = Organizator.objects.create(user=user)
         organizator.name = self.cleaned_data.get('name')
         organizator.description = self.cleaned_data.get('description')
         return user
