@@ -12,6 +12,7 @@ from rest_framework.exceptions import ValidationError
 from .models import TokenModel
 from .utils import import_callable
 
+from users.models import Volunteer, Organizator
 # Get the UserModel
 UserModel = get_user_model()
 
@@ -129,8 +130,22 @@ class UserDetailsSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = UserModel
-        fields = ('pk', 'username', 'email', 'first_name', 'last_name')
+        fields = ('pk', 'username', 'email')
         read_only_fields = ('email', )
+
+
+class VolunteerProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        depth = 2
+        model = Volunteer
+        fields = '__all__'
+
+
+class OrganizatorProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        depth = 2
+        model = Organizator
+        fields = '__all__'
 
 
 class JWTSerializer(serializers.Serializer):
