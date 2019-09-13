@@ -5,6 +5,8 @@ from univol.models import Vacancy, Responds
 from users.models import Volunteer
 
 
+# Create your views here.
+# @login_required
 def index(request):
     context = {
         "some_content": 'you you are here'

@@ -29,11 +29,12 @@ from rest_auth.registration.serializers import (VerifyEmailSerializer,
                                                 SocialConnectSerializer)
 from rest_auth.utils import jwt_encode
 from rest_auth.views import LoginView
-from .app_settings import RegisterSerializer, register_permission_classes
-
+from .app_settings import register_permission_classes
+from .serializers import RegisterSerializer
 sensitive_post_parameters_m = method_decorator(
     sensitive_post_parameters('password1', 'password2')
 )
+from users.models import Volunteer, Organizator
 
 
 class RegisterView(CreateAPIView):
@@ -65,11 +66,19 @@ class RegisterView(CreateAPIView):
         user = self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
 
+        if serializer.data['user_type'] is True:
+            user_profile = Volunteer.objects.create(user=user)
+            user_profile.save()
+        else:
+            user_profile = Organizator.objects.create(user=user)
+            user_profile.save()
+
         return Response(self.get_response_data(user),
                         status=status.HTTP_201_CREATED,
                         headers=headers)
 
     def perform_create(self, serializer):
+        print("perform creator")
         user = serializer.save(self.request)
         if getattr(settings, 'REST_USE_JWT', False):
             self.token = jwt_encode(user)

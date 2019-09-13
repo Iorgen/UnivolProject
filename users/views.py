@@ -2,7 +2,11 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import VolunteerSignUpForm, OrganizatorSignUpForm
-
+# TODO login after signup
+from django.contrib.auth import (
+    login as django_login,
+    logout as django_logout
+)
 
 def register(request):
     return render(request, 'users/registration/signup.html')
