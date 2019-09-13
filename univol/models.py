@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from django.db import models
+from django.utils import timezone
 
 from users.models import CustomUser, Organizator, Volunteer
 
@@ -22,5 +23,6 @@ class Vacancy(models.Model):
 class Responds(models.Model):
     organization_id = models.IntegerField()
     volunteer = models.ForeignKey(Volunteer, on_delete=models.CASCADE)
-    respond_date = models.DateTimeField(default=datetime.now())
+    respond_date = models.DateTimeField(default=timezone.now)
+    vacancy = models.ForeignKey(Vacancy, on_delete=models.CASCADE)
 
