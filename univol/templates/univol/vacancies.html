@@ -1,0 +1,16 @@
+{% extends "univol/base.html" %}
+{% load static from staticfiles %}
+{% load crispy_forms_tags %}
+{% block content %}
+  {% if user.is_volunteer %}
+    {% for form in vacancies %}
+        <div class="content-section">
+            Vacancy name: {{form.vacancy_name}}
+            <br> Date range: {{form.date_range}}
+            <br> Organizator: {{form.organization.name}}
+            <br> Competitions: {{form.competitions_keywords}}
+            <br> Event name: {{form.event_name}}
+        </div>
+    {% endfor %}
+  {% endif %}
+{% endblock content %}

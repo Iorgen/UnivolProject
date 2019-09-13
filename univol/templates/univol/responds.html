@@ -1,0 +1,13 @@
+{% extends "univol/base.html" %}
+{% load static from staticfiles %}
+{% load crispy_forms_tags %}
+{% block content %}
+<h1>Chat with {{reciver}}</h1>
+
+    {% for message in vacancies %}
+        <div class="content-section">
+            <br>Responds: {{message.message_text}}
+            <br>Date: {{message.send_date}}
+        </div>
+    {% endfor %}
+{% endblock content %}
