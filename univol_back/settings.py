@@ -26,12 +26,12 @@ SECRET_KEY = '407p3yt1pe4!v4k-ipoqu)kp(b)pcx8ohqo1#@z!qzzy7o=lz2'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'safe-bastion-88967.herokuapp.com'
+    'safe-bastion-88967.herokuapp.com',
+    '127.0.0.1'
 ]
-# DEBUG = True
-# ALLOWED_HOSTS = []
-# Application definition
 
+
+# Application definition
 INSTALLED_APPS = [
     'rest_api',
     'rest_framework',
