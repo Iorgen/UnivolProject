@@ -30,6 +30,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'rest_framework.authtoken',  # new!
+    'rest_auth',  # new!
     'rest_framework',
     'api',
     'crispy_forms',
