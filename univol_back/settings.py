@@ -50,11 +50,15 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'rest_auth',
 
+    'rest_auth.registration',
     'allauth',
     'allauth.account',
-    'rest_auth.registration',
     'allauth.socialaccount',
+    'allauth.socialaccount.providers.vk',
     'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.twitter',
+    'allauth.socialaccount.providers.odnoklassniki',
+    'allauth.socialaccount.providers.instagram',
     'rest_framework_swagger',
 
 ]
@@ -95,7 +99,7 @@ WSGI_APPLICATION = 'univol_back.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
-
+#
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',

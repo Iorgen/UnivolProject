@@ -1,6 +1,7 @@
 from django.contrib import admin
-# from .models import Profile
+from .models import Volunteer, Organizator
 from .models import CustomUser
 
-# admin.site.register(Profile)
+admin.site.register(Organizator)
+admin.site.register(Volunteer)
 admin.site.register(CustomUser)
