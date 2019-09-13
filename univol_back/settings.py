@@ -23,13 +23,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '407p3yt1pe4!v4k-ipoqu)kp(b)pcx8ohqo1#@z!qzzy7o=lz2'
 
 # # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = False
-#
-# ALLOWED_HOSTS = [
-#     'safe-bastion-88967.herokuapp.com'
-# ]
 DEBUG = True
-ALLOWED_HOSTS = []
+
+ALLOWED_HOSTS = [
+    'safe-bastion-88967.herokuapp.com'
+]
+# DEBUG = True
+# ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
@@ -96,23 +96,23 @@ WSGI_APPLICATION = 'univol_back.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
-
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'dfa72p5uu9844r',
-#         'USER': 'mjsdlaournzbpd',
-#         'PASSWORD': 'a48b06f4551d39cb1aa5103514f446155ff789da930c50718b99ec835cec1e7d',
-#         'HOST': 'ec2-184-73-232-93.compute-1.amazonaws.com',
-#         'PORT': '5432',
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 #     }
 # }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'dfa72p5uu9844r',
+        'USER': 'mjsdlaournzbpd',
+        'PASSWORD': 'a48b06f4551d39cb1aa5103514f446155ff789da930c50718b99ec835cec1e7d',
+        'HOST': 'ec2-184-73-232-93.compute-1.amazonaws.com',
+        'PORT': '5432',
+    }
+}
 
 
 # Password validation
