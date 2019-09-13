@@ -1,2 +1,8 @@
 from django.db import models
-from django.contrib.auth.models import User
+
+from users.models import CustomUser
+
+
+class Contribution(models.Model):
+    id_person = models.ForeignKey(CustomUser, on_delete=models.CASCADE)  # mock
+    #id_organization = models.ForeignKey(CustomUser, on_delete=models.CASCADE)  # mock
