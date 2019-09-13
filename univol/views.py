@@ -43,18 +43,28 @@ def get_vacancies(request):
         return redirect('/vacancies/')
 
 
-def chat_view(request, responder):
+def responds_view(request, responder=None):
     if request.method == 'GET':
-        responds = list(
-            Responds.objects.filter(
-                volunteer_id=responder,
-                organization_id=request.user.id
-            ).order_by('send_date')
-        )
-        context = {
-            'messages': responds,
-        }
-        return render(request, 'univol/responds.html', context)
+        if request.user.is_organization:
+            if responder is None:
+                responds = list(
+                    Responds.objects.filter(
+                        organization_id=request.user.id
+                    )
+                )
+                context = {
+                    'respond': responds,
+                }
+                return render(request, 'univol/responds.html', context)
 
-    reporter_id = request.user.id
+            responds = list(
+                Responds.objects.filter(
+                    volunteer_id=responder,
+                    organization_id=request.user.id
+                ).order_by('send_date')
+            )
+            context = {
+                'respond': responds,
+            }
+            return render(request, 'univol/responds.html', context)
 

@@ -8,5 +8,6 @@ urlpatterns = [
     path('', views.index, name='univol-index'),
     path('', views.home, name='univol-home'),
     path('vacancies/', views.get_vacancies, name='vacancies'),
-    url('^messages/?(?P<responder>\d+)?/?$', views.chat_view, name='chat')
+    url('^responds/', views.responds_view, name='chat'),
+    url('^responds/?(?P<responder>\d+)?/?$', views.responds_view, name='chat')
 ]
