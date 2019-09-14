@@ -2,6 +2,13 @@ from django.contrib.auth import (
     login as django_login,
     logout as django_logout
 )
+
+from univol.models import Vacancy
+from django.contrib.auth.models import User
+from .serializers import VacancySerializer
+from rest_framework import generics
+from rest_framework.permissions import IsAdminUser
+
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
@@ -16,14 +23,14 @@ from rest_framework.generics import GenericAPIView, RetrieveUpdateAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 
 from .app_settings import (
-    TokenSerializer, LoginSerializer,
+    TokenSerializer,
     PasswordResetSerializer, PasswordResetConfirmSerializer,
     PasswordChangeSerializer, JWTSerializer, create_token
 )
 from .models import TokenModel
 from .utils import jwt_encode
 from users.models import Volunteer, Organizator
-from .serializers import VolunteerProfileSerializer, OrganizatorProfileSerializer
+from .serializers import VolunteerProfileSerializer, OrganizatorProfileSerializer, LoginSerializer
 sensitive_post_parameters_m = method_decorator(
     sensitive_post_parameters(
         'password', 'old_password', 'new_password1', 'new_password2'
@@ -84,7 +91,6 @@ class LoginView(GenericAPIView):
         else:
             serializer = serializer_class(instance=self.token,
                                           context={'request': self.request})
-
         response = Response(serializer.data, status=status.HTTP_200_OK)
         if getattr(settings, 'REST_USE_JWT', False):
             from rest_framework_jwt.settings import api_settings as jwt_settings
@@ -95,6 +101,8 @@ class LoginView(GenericAPIView):
                                     self.token,
                                     expires=expiration,
                                     httponly=True)
+
+        response.data['volunter'] = self.user.is_volunteer
         return response
 
     def post(self, request, *args, **kwargs):
@@ -241,3 +249,14 @@ class PasswordChangeView(GenericAPIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response({"detail": _("New password has been saved.")})
+
+
+class VacancyList(generics.ListCreateAPIView):
+    queryset = Vacancy.objects.all()
+    serializer_class = VacancySerializer
+
+    def list(self, request):
+        # Note the use of `get_queryset()` instead of `self.queryset`
+        queryset = self.get_queryset()
+        serializer = VacancySerializer(queryset, many=True)
+        return Response(serializer.data)

@@ -13,6 +13,7 @@ from .models import TokenModel
 from .utils import import_callable
 
 from users.models import Volunteer, Organizator
+from univol.models import Vacancy
 # Get the UserModel
 UserModel = get_user_model()
 
@@ -122,6 +123,10 @@ class TokenSerializer(serializers.ModelSerializer):
     class Meta:
         model = TokenModel
         fields = ('key',)
+
+    def create(self, validated_data):
+        validated_data['user'] = get_user_model()
+        return super(TokenSerializer, self).create(validated_data)
 
 
 class UserDetailsSerializer(serializers.ModelSerializer):
@@ -289,3 +294,11 @@ class PasswordChangeSerializer(serializers.Serializer):
         if not self.logout_on_password_change:
             from django.contrib.auth import update_session_auth_hash
             update_session_auth_hash(self.request, self.user)
+
+
+class VacancySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Vacancy
+        # fields = ('vacancy_name', 'date_range', 'description', 'competitions_keywords',
+        #           'event_name')
+        fields = '__all__'

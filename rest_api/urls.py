@@ -1,10 +1,10 @@
 from django.conf.urls import url
 
 from rest_auth.views import (
-    LoginView, LogoutView, PasswordChangeView,
-    PasswordResetView, PasswordResetConfirmView
+     LogoutView, PasswordChangeView,
+     PasswordResetView, PasswordResetConfirmView
 )
-from .views import UserDetailsView
+from .views import UserDetailsView, LoginView, VacancyList
 
 urlpatterns = [
     # URLs that do not require a session or valid token
@@ -18,4 +18,6 @@ urlpatterns = [
     url(r'^user/$', UserDetailsView.as_view(), name='rest_user_details'),
     url(r'^password/change/$', PasswordChangeView.as_view(),
         name='rest_password_change'),
+
+    url(r'^vacancies/$', VacancyList.as_view(), name='get_vacancies')
 ]
