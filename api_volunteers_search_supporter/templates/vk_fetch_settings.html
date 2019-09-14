@@ -1,0 +1,14 @@
+{% extends "univol/base.html" %}
+
+{% block content %}
+  {% for url in users_urls %}
+      <form method="post" action="{% url 'predict_vk' %}">
+          <label>Keyword to search</label>
+          <input type="text" name="keyword">
+          <br>
+          <label>City id</label>
+          <input type="text" name="city">
+          <button type="submit">Try to get users from VK</button>
+      </form>
+  {% endfor %}
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "univol/base.html" %}
+{% load static from staticfiles %}
+{% load crispy_forms_tags %}
+{% block content %}
+      <form method="post" action="{% url 'predict_vk' %}">
+          {% csrf_token %}
+          <label>Keyword to search</label>
+          <input type="text" name="keyword">
+          <br>
+          <label>City id</label>
+          <input type="text" name="city">
+          <br><button type="submit">Try to get users from VK</button>
+      </form>
+{% endblock content %}

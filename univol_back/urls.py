@@ -24,6 +24,7 @@ from django.contrib import admin
 from django.views.generic import TemplateView, RedirectView
 from rest_framework_swagger.views import get_swagger_view
 from django.contrib.auth import views as auth_views
+from api_volunteers_search_supporter import views as external_api_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -34,6 +35,8 @@ urlpatterns = [
     path('accounts/register/organizator', user_views.organizator_register, name='organizator_signup'),
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
+    path('fetch_from_vk/', external_api_views.get_vk_prediction_page, name='vk_settings_predictions'),
+    path('fetch_from_vk/predict/', external_api_views.get_prediction_by_keyword_and_city, name='predict_vk'),
 
     # ----------------------
     # this url is used to generate email content
