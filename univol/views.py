@@ -1,26 +1,38 @@
 from django.shortcuts import render, redirect
 from django.template.defaulttags import csrf_token
-
 from univol.models import Vacancy, Responds
 from users.models import Volunteer
-
-
-# Create your views here.
-# @login_required
-def index(request):
-    context = {
-        "some_content": 'you you are here'
-    }
-    return render(request, 'univol/index.html', context)
-
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.utils.decorators import method_decorator
+from .decorators import volunteer_required, organizator_required
+from .forms import AddVacancyForm
 
 def home(request):
+
+    # TODO Small Vacancy list
     context = {
         "some_content": 'you you are here'
     }
     return render(request, 'univol/index.html', context)
 
 
+@login_required
+@organizator_required
+def add_vacancy(request):
+    if request.method == 'POST':
+        form = AddVacancyForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Vacancy create successful")
+            return redirect('univol-home')
+    else:
+        form = AddVacancyForm()
+    return render(request, 'univol/add_vacancy.html', {'form': form})
+
+
+@login_required
+@volunteer_required
 def get_vacancies(request):
     if request.method == 'GET':
         vacancies = list(

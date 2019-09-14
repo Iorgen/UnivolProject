@@ -44,24 +44,14 @@ class OrganizatorSignUpForm(UserCreationForm):
         organizator.description = self.cleaned_data.get('description')
         return user
 
+# TODO delete user field from forms
+class VolunteerUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Volunteer
+        fields = "__all__"
 
-# class UserRegisterForm(UserCreationForm):
-#     email = forms.EmailField()
-#
-#     class Meta:
-#         model = User
-#         fields = ['username', 'email', 'password1', 'password2']
-#
-#
-# class UserUpdateForm(forms.ModelForm):
-#     email = forms.EmailField()
-#
-#     class Meta:
-#         model = User
-#         fields = ['username', 'email']
-#
-#
-# class ProfileUpdateForm(forms.ModelForm):
-#     class Meta:
-#         model = Profile
-#         fields = ['image']
+
+class OrganizatorUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Organizator
+        fields = "__all__"

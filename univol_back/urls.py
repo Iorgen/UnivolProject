@@ -28,6 +28,7 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('univol.urls')),
+    path('profile/', user_views.profile, name='profile'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/register/', user_views.register, name='register'),
     path('accounts/register/volunteer', user_views.volunteer_register, name='volunteer_signup'),

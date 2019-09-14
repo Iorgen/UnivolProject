@@ -1,5 +1,5 @@
 from datetime import datetime
-
+from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils import timezone
 
@@ -12,12 +12,12 @@ class Contribution(models.Model):
 
 
 class Vacancy(models.Model):
-    vacancy_name = models.TextField(max_length=50)
-    date_range = models.TextField(max_length=21)
+    vacancy_name = models.CharField(max_length=50)
+    date_range = models.DateTimeField(default=datetime.now())
     description = models.TextField(max_length=5000)
-    organization = models.ForeignKey(Organizator, on_delete=models.CASCADE)
-    competitions_keywords = models.TextField(max_length=5000)
-    event_name = models.TextField(max_length=1000)
+    competitions_keywords = models.CharField(max_length=500)
+    event_name = models.CharField(max_length=100)
+    organization = models.ForeignKey(CustomUser, on_delete=models.CASCADE, default=get_user_model())
 
 
 class Responds(models.Model):

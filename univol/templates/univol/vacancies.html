@@ -2,7 +2,6 @@
 {% load static from staticfiles %}
 {% load crispy_forms_tags %}
 {% block content %}
-  {% if user.is_volunteer %}
     {% for form in vacancies %}
         <div class="content-section">
             Vacancy name: {{form.vacancy_name}}
@@ -15,12 +14,11 @@
 
             <form method="post">
                 {% csrf_token %}
-        <input type="hidden" value="{{form.id}}" name="vacancy_id">
-        <input type="hidden" value="{{form.organization.id}}" name="organization_id">
-        <button type="submit">Respond</button>
-    </form>
+                <input type="hidden" value="{{form.id}}" name="vacancy_id">
+                <input type="hidden" value="{{form.organization.id}}" name="organization_id">
+                <button type="submit">Respond</button>
+            </form>
         </div>
 
     {% endfor %}
-  {% endif %}
 {% endblock content %}

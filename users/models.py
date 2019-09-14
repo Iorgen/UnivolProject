@@ -1,10 +1,6 @@
-from django.db import models
 from PIL import Image
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django.conf import settings
 
 
 class CustomUser(AbstractUser):
@@ -14,80 +10,41 @@ class CustomUser(AbstractUser):
 
 class Volunteer(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key=True, related_name='usr')
-    first_name = models.TextField(max_length=100, null=False)
-    last_name = models.TextField(max_length=100, null=False)
+    first_name = models.CharField(max_length=100, null=False, default='')
+    last_name = models.CharField(max_length=100, null=False, default='')
     # contacts = models.ForeignKey(Contacts, on_delete=models.CASCADE)
-    country = models.TextField(max_length=30, null=False)
-    city = models.TextField(max_length=30, null=False)
-    # photo = models.ImageField(verbose_name='User photo', name='User photo')
-    # rating = models.FloatField(default=0)
-    # description = models.TextField(max_length=5000)
-    # employment_situation = models.TextField(max_length=100)
+    country = models.CharField(max_length=30, null=False, default='')
+    city = models.CharField(max_length=30, null=False, default='')
+    photo = models.ImageField(default='default.jpg', upload_to='profile_pics/')
+    description = models.TextField(max_length=5000, default='')
+
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        img = Image.open(self.photo.path)
+
+        if img.height > 300 or img.width > 300:
+            output_size = (300, 300)
+            img.thumbnail(output_size)
+            img.save(self.photo.path)
 
 
 class Organizator(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key=True)
     name = models.TextField(max_length=100, null=False)
     description = models.TextField(max_length=5000, null=False)
-    # organization_logo = models.ImageField(verbose_name='Logo', name='Logo')
-    # country = models.TextField(max_length=30)
-    # city = models.TextField(max_length=30)
-    # address = models.TextField(max_length=100)
+    photo = models.ImageField(default='default.jpg', upload_to='profile_pics/')
+    country = models.CharField(max_length=30, default='')
+    city = models.CharField(max_length=30, default='')
+    address = models.CharField(max_length=100, default='')
 
-#
-# # ---------------------
-# class Contacts(models.Model):
-#     phone_number = models.TextField(max_length=40)
-#     # viber = phone_number
-#     # telegram = phone_number
-#     instagram_user_name = models.TextField(max_length=100)
-#     facebook_link = models.TextField(max_length=100)
-#     vk_link = models.TextField(max_length=100)
-#     email_adress = models.TextField(max_length=100)
-#
-#
-# # from users.models import Organization
-# class Organization(models.Model):
-#     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-#     name = models.TextField(max_length=100, null=False)
-#     description = models.TextField(max_length=5000, null=False)
-#     contacts = models.ForeignKey(Contacts, on_delete=models.CASCADE)
-#     organization_logo = models.ImageField(verbose_name='Logo', name='Logo')
-#     country = models.TextField(max_length=30)
-#     city = models.TextField(max_length=30)
-#     address = models.TextField(max_length=100)
-#
-#
-# class Volunteer(models.Model):
-#     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-#     first_name = models.TextField(max_length=100, null=False)
-#     last_name = models.TextField(max_length=100, null=False)
-#     contacts = models.ForeignKey(Contacts, on_delete=models.CASCADE)
-#     county = models.TextField(max_length=30, null=False)
-#     city = models.TextField(max_length=30, null=False)
-#     photo = models.ImageField(verbose_name='User photo', name='User photo')
-#     rating = models.FloatField(default=0)
-#     description = models.TextField(max_length=5000)
-#     employment_situation = models.TextField(max_length=100)
-#
-#
-#
-#
-# # Create your models here.
-# class Profile(models.Model):
-#     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-#     image = models.ImageField(default='default.jpg', upload_to='profile_pics/')
-#
-#     def __str__(self):
-#         return "%s Profile" % self.user.username
-#
-#     def save(self, *args, **kwargs):
-#         super().save(*args, **kwargs)
-#
-#         img = Image.open(self.image.path)
-#
-#         if img.height > 300 or img.width > 300:
-#             output_size = (300, 300)
-#             img.thumbnail(output_size)
-#             img.save(self.image.path)
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
 
+        img = Image.open(self.photo.path)
+
+        if img.height > 300 or img.width > 300:
+            output_size = (300, 300)
+            img.thumbnail(output_size)
+            img.save(self.photo.path)
