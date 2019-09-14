@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+  {% for url in users_urls %}
+      <div class="content-section">
+        {{url}}
+      </div>
+  {% endfor %}
+{% endblock %}

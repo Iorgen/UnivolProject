@@ -1,0 +1,10 @@
+{% extends "univol/base.html" %}
+{% load static from staticfiles %}
+{% load crispy_forms_tags %}
+{% block content %}
+      {% for url in users_urls %}
+      <div class="content-section">
+        {{url}}
+      </div>
+  {% endfor %}
+{% endblock content %}
