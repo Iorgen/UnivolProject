@@ -8,7 +8,6 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{% static 'univol/main.css' %}">
-    {#    <link rel="stylesheet" type="text/css" href="{% static 'univol/normalize.css' %}">#}
     <link rel="stylesheet" type="text/css" href="{% static 'univol/set1.css' %}">
     <script href="{% static 'univol/modernizr.custom.js' %}"></script>
     <script href="{% static 'univol/toucheffects.js' %}"></script>
@@ -28,7 +27,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarToggle">
                 <div class="navbar-nav mr-auto">
-                    <a class="nav-item nav-link" href="{% url 'profile' %}">AP</a>
+
                 </div>
                 <!-- Navbar Right Side -->
                 <div class="navbar-nav">
@@ -36,6 +35,7 @@
                         {% if user.is_organizator %}
                             <a class="nav-item nav-link" href="{% url 'univol-add-vacancy' %}">Добавить вакансию</a>
                         {% else %}
+                            <a class="nav-item nav-link" href="{% url 'univol-vacancies' %}">Просмотреть вакансии</a>
                         {% endif %}
                         <a class="nav-item nav-link" href="{% url 'profile' %}">profile</a>
                         <a class="nav-item nav-link" href="{% url 'logout' %}">logout</a>

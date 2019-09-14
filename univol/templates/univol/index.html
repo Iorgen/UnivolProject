@@ -5,7 +5,24 @@
     <div class="content-section">
         <h3>All Themes</h3>
         <ul class="list-group">
-            {{ some_content }}
+            {% for form in vacancies %}
+                <div class="content-section">
+                    Vacancy name: {{form.vacancy_name}}
+                    <br> Date range: {{form.date_range}}
+                    <br> Organizator: {{form.organization.name}}
+                    <br> Competitions: {{form.competitions_keywords}}
+                    <br> Event name: {{form.event_name}}
+                    <br>
+                    <br>
+                    <form method="post">
+                        {% csrf_token %}
+                        <input type="hidden" value="{{form.id}}" name="vacancy_id">
+                        <input type="hidden" value="{{form.organization.id}}" name="organization_id">
+                        <button class = "btn btn-primary" type="submit">Respond</button>
+                    </form>
+                </div>
+
+            {% endfor %}
         </ul>
         <input id="room-name-input" type="text" size="50"/><br/>
         <input id="room-name-submit" type="button" value="Enter"/>

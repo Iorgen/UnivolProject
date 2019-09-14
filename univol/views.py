@@ -10,9 +10,9 @@ from .forms import AddVacancyForm
 
 def home(request):
 
-    # TODO Small Vacancy list
+    vacancies = Vacancy.objects.all()
     context = {
-        "some_content": 'you you are here'
+        "vacancies": vacancies[:3]
     }
     return render(request, 'univol/index.html', context)
 
